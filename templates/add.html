@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Add Exercise
+{% endblock %}
+
+{% block main %}
+
+<p class="h2">Add Exercises to Random Pool</p>
+
+<form id="add-form" method="post">
+
+    {% if added == 1 %}
+    <div id="add-alert" class="alert alert-success" role="alert">
+        Added exercise successfully
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="name">Exercise Name</label>
+        <input type="text" class = "form-control" id="name" name="name" placeholder="Exercise Name">
+        <div id="name-feedback" class="invalid-feedback">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="group">Muscle Group</label>
+        <select class="custom-select custom-select-lg mb-3" id="group" name="group">
+            {% for group in muscle_groups %}
+            <option value="{{group}}">{{group}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="type">Workout Type</label>
+        <select class="custom-select custom-select-lg mb-3" id="type" name="type">
+            {% for type in workout_types %}
+            <option value="{{type}}">{{type}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Add</button>
+
+</form>
+
+
+{% endblock %}

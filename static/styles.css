@@ -1,0 +1,18 @@
+.h2{
+    text-align:center;
+    margin-bottom:3%;
+}
+
+.butt{
+    margin-top:1%;
+}
+
+.saveWorkout{
+    width: 100%;
+    text-align: center;
+    margin-top: 1%;
+}
+
+.savedWorkout{
+    flex-wrap: wrap;
+}
