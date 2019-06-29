@@ -410,6 +410,3 @@ def editWorkout():
     """ Return Individual Edit Form for Workout """
 
 
-@app.route("/scrape", methods = ["GET"])
-def scrape():
-    return render_template('scrape.html')
