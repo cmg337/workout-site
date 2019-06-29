@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Your Workout
+{% endblock %}
+
+{% block main %}
+
+
+    <p class="h2"><u>Your Random Workout</u></p>
+
+
+
+    <div class="list-group">
+
+
+        {% for workout in workouts %}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ workout["name"] }}</h5>
+                    <small>{{ workout['group'] }}</small>
+                </div>
+                <p class="mb-1">Todo: Time/Sets/Reps</p>
+                <small>Todo: description</small>
+            </a>
+        {% endfor %}
+    </div>
+
+    {% if loggedIn == 1%}
+        <div class="saveWorkout">
+            <button type="button" class="btn btn-success" id="saveWorkout" name="saveWorkout" onclick="saveWorkout({{workouts}})">Save Workout</button>
+            <div class="alert alert-warning" id="createAlert" role="alert" style="display: none">
+                You already have the max of 10 workouts, you need to delete some to create more
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

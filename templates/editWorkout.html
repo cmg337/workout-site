@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Workout
+{% endblock %}
+
+{% block main %}
+
+<p class="h2">Edit Workout</p>
+
+<form id="editWorkoutForm" method="post" action="/editWorkout">
+
+
+    <input type="number" name="id" id="id" value="{{workout[0]['id']}}" hidden/>
+
+    <div class="form-group">
+        <label for="workoutName"><b>Workout Name</b></label>
+        <input type="text" class = "form-control" id="workoutName" name="workoutName" placeholder="{{workout[0]['workoutName']}}">
+        <div id="name-feedback" class="invalid-feedback">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="numberExercises">Number of Exercises</label>
+        <input type="number" class = "form-control" id="numberExercises" name="numberExercises" placeholder="Number of Exercises"min="1" max="12">
+        <div id="number-feedback" class="invalid-feedback">
+        </div>
+    </div>
+
+    <br>
+
+    {% if error == 0 %}
+
+        {% for n in range(12) %}
+            <div class="form-row" id="exercise{{n}}" name="exercise{{n}}" style="display: none;">
+                <div class="form-group col-md-6">
+                    <label for="createWorkoutSelect{{n}}">Exercise {{n+1}}</label>
+                    <select class="form-control" id="createWorkoutSelect{{n}}" name="createWorkoutSelect{{n}}">
+                        {% for exercise in exerciseTable %}
+                            <option id="{{ exercise['id'] }}" name="name{{n}}" value="{{ exercise['id'] }}">{{ exercise["name"] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="sets{{n}}">Sets</label>
+                    <input id="sets{{n}}" name="sets{{n}}" class="form-control" type="number" placeholder="Number of Sets" min="0" max="100" value="0">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="reps{{n}}">Reps</label>
+                    <input id="reps{{n}}" name="reps{{n}}" class="form-control" type="number" placeholder="Number of Reps" min="0" max="1000" value="0">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="weight{{n}}">Weight</label>
+                    <input id="weight{{n}}" name="weight{{n}}" class="form-control" type="number" placeholder="Weight(lbs)" min="0" max="5000" value="0">
+                </div>
+            </div>
+        {% endfor %}
+
+        <button type="submit" id="createButton" class="btn btn-primary">Create Workout</button>
+
+    {% else %}
+
+        <button type="button" class="btn btn-success" id="createButton" disabled>Create Workout</button>
+        <div class="alert alert-warning" id="createAlert" role="alert">
+            You already have the max of 10 workouts, you need to delete some to create more
+        </div>
+    {% endif %}
+
+</form>
+
+
+{% endblock %}

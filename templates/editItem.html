@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Exercise
+{% endblock %}
+
+{% block main %}
+
+<p class="h2">Edit Exercise</p>
+
+<form id="edit-form" method="post" action="/editItem">
+    <input type="number" name="id" id="id" value="{{exercise_info['id']}}" hidden/>
+
+    <div class="form-group">
+        <label for="newName">Exercise Name</label>
+        <input type="text" class = "form-control" id="newName" name="newName" value="{{exercise_info['name']}}">
+        <div id="newName-feedback" class="invalid-feedback">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="group">Muscle Group</label>
+        <select class="custom-select custom-select-lg mb-3" id="group" name="group">
+            {% for group in muscle_groups %}
+            <option value="{{group}}"
+            {% if exercise_info['groups'] == group %} selected {% endif %}>{{group}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="type">Workout Type</label>
+        <select class="custom-select custom-select-lg mb-3" id="type" name="type">
+            {% for type in workout_types %}
+            <option value="{{type}}"
+            {% if exercise_info['type'] == type %} selected {% endif %}>{{type}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Finish Edit</button>
+
+</form>
+
+
+{% endblock %}
