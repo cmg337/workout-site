@@ -8,8 +8,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required
 from datetime import datetime, date
 
-# version1
-
 # Configure application
 app = Flask(__name__)
 
@@ -410,3 +408,8 @@ def create():
 @login_required
 def editWorkout():
     """ Return Individual Edit Form for Workout """
+
+
+@app.route("/scrape", methods = ["GET"])
+def scrape():
+    return render_template('scrape.html')
