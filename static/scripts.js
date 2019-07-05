@@ -30,6 +30,7 @@ $(document).ready(function() {
 
 
 
+
   // check if register meets requirements before sending to server
   $("#register-form").on("submit", function(event) {
     // variable to check if form passes test

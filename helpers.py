@@ -16,3 +16,17 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+def get_images(link):
+    linkList =[]
+    link = link[0:-5]
+    for i in range(1,4):
+        newLink = link + str(i) + ".jpg"
+        req = requests.get(newLink)
+        if req.status_code == 200:
+            linkList.append(newLink)
+        else:
+            break;
+    return linkList;
+    
+

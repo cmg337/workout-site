@@ -5,8 +5,9 @@ import random
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required
+from helpers import login_required, get_images
 from datetime import datetime, date
+import urllib.request
 
 # Configure application
 app = Flask(__name__)
@@ -80,16 +81,19 @@ def workout():
     result = []
     for i in range(int(request.form.get("number"))):
         if len(workoutPool) > 0:
-            random_int = random.randrange(0, len(workoutPool))
-            result.append(workoutPool[random_int])
-            del workoutPool[random_int]
+            randomInt = random.randrange(0, len(workoutPool))
+            workoutPool[randomInt]['imgList'] = get_images(workoutPool[randomInt]['img'])
+            result.append(workoutPool[randomInt])
+
+            # get desrciption html
+            del workoutPool[randomInt]
         else:
             break
 
     # see if user logged in to add option to save workout
     loggedIn = 0 if len(session) == 0 else 1
 
-    print(result)
+    
 
     return render_template("workout.html", workouts=result, loggedIn=loggedIn)
 

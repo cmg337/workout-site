@@ -1,4 +1,4 @@
-.h2{
+/* .h2{
     text-align:center;
     margin-bottom:3%;
 }
@@ -15,4 +15,24 @@
 
 .savedWorkout{
     flex-wrap: wrap;
+} */
+
+/* generated workout page */
+.ex-info{
+  padding-left: 1%;
+}
+
+.workout-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workout-img{
+  max-height: 200px;
+}
+
+#workout-img-div{
+    display: flex;
+    align-content: flex-end;
 }
