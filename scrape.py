@@ -7,6 +7,7 @@ import time
 from bs4 import BeautifulSoup
 import re
 from functools import reduce
+import requests
 
 db = SQL("sqlite:///workout.db")
 # check if missed 51-56
@@ -83,10 +84,22 @@ def main():
 
 
 
-def test():
-    addExercise('/exercises/push-press')
-    # db.execute('delete from BB_Workouts')
+def addIMGLinks():
+    for exercise in db.execute("SELECT * FROM BB_Workouts"):
+        link = exercise['img'][0:-5]
+        numLinks = 0
+        for i in range(1,5):
+            newLink = link + str(i) + ".jpg"
+            req = requests.get(newLink)
+            if req.status_code == 200:
+                numLinks += 1;
+            else:
+                break;
+        db.execute("UPDATE BB_Workouts SET img = :link, numImgs = :numLinks WHERE id = :id1", link=link, numLinks=numLinks, id1=exercise['id'])
+        
 
 
 
-main()
+
+
+addIMGLinks()

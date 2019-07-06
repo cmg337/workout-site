@@ -5,9 +5,12 @@ import random
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required, get_images
+from helpers import login_required
 from datetime import datetime, date
 import urllib.request
+from bs4 import BeautifulSoup
+import requests
+from jinja2 import Markup, escape
 
 # Configure application
 app = Flask(__name__)
@@ -82,10 +85,7 @@ def workout():
     for i in range(int(request.form.get("number"))):
         if len(workoutPool) > 0:
             randomInt = random.randrange(0, len(workoutPool))
-            workoutPool[randomInt]['imgList'] = get_images(workoutPool[randomInt]['img'])
             result.append(workoutPool[randomInt])
-
-            # get desrciption html
             del workoutPool[randomInt]
         else:
             break
@@ -96,6 +96,25 @@ def workout():
     
 
     return render_template("workout.html", workouts=result, loggedIn=loggedIn)
+
+@app.route("/exercise", methods=["GET"])
+def exercise():
+    """Return Exercise description popup """
+
+    # get id from search query
+    id1 = request.args.get('id')
+    exerciseInfo = db.execute("SELECT * FROM BB_Workouts WHERE id=:id1", id1=id1)
+
+    # load page
+    url = 'https://www.bodybuilding.com' + exerciseInfo[0]['link']
+    response = requests.get(url)
+    page = BeautifulSoup(response.text, 'html.parser')
+
+    # get each peice of in based on specific html attributes
+    infoList = page.find('section', class_ = 'ExDetail-guide').contents
+    print(infoList)
+    return render_template('exercise.html', html = infoList)
+
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -128,12 +147,6 @@ def register():
         session["user_id"] = db.execute(
             "SELECT id FROM users WHERE email = :email", email=email)[0]["id"]
         user_id = str(session["user_id"])
-
-        # create user table to store exercises
-        db.execute(
-            "CREATE TABLE :user_id (id INTEGER PRIMARY KEY, name, groups, type)", user_id=user_id)
-        db.execute(
-            "INSERT INTO :user_id (id, name, groups, type) SELECT * FROM workouts", user_id=user_id)
 
         return redirect("/")
 
@@ -204,14 +217,12 @@ def saveWorkout():
     workoutID = idList[0]
 
     # loop through exercises in workout to save based on length
-    for exercise_num in range(int(request.form.get('length'))):
-        # get exercise info from user table based on exercise id
-        exercise_info = db.execute("SELECT name, groups, type FROM :table WHERE id = :exercise_id",
-                                   table=user_id, exercise_id=request.form.get(str(exercise_num)))[0]
+    for exerciseNum in range(int(request.form.get('length'))):
+        # get exercise id from form
+        exerciseID=request.form.get(str(exerciseNum))
         # insert info into saved table
-        db.execute("INSERT INTO saved (workoutName, userID, exerciseName, groups, type, date, workoutID, setCount, repCount, weight) VALUES (:workoutName, :userID, :exerciseName, :group, :_type, :date, :workoutID, 0, 0 ,0)",
-                   workoutName='Saved Workout ' + str(datetime.now())[0:-10], userID=user_id, exerciseName=exercise_info['name'], group=exercise_info['groups'], _type=exercise_info['type'],
-                   date=date.today(), workoutID=workoutID)
+        db.execute("INSERT INTO saved (workoutID, workoutName, userID, date, setCount, repCount, weight, exerciseID) VALUES (:workoutID, :workoutName, :userID, :date, 0, 0 ,0, :exerciseID)",
+                   workoutName='Saved Workout ' + str(datetime.now())[0:-10], userID=user_id, date=date.today(), workoutID=workoutID, exerciseID=exerciseID)
     return 'true'
 
 
@@ -337,3 +348,4 @@ def create():
 @login_required
 def editWorkout():
     """ Return Individual Edit Form for Workout """
+    return render_template('editWorkout.html')
