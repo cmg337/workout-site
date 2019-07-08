@@ -281,8 +281,7 @@ def create():
     """ create new workouts or edits existing workout """
     # load page at get request
     if request.method == "GET":
-        user_id = str(session["user_id"])
-        exerciseTable = db.execute('SELECT * FROM :table', table=user_id)
+        exerciseTable = db.execute('SELECT * FROM BB_Workouts')
 
         return render_template("create.html", error=0, exerciseTable=exerciseTable, edit=0)
 
@@ -323,23 +322,23 @@ def create():
             db.execute(
                 "DELETE FROM saved WHERE workoutID = :workoutID", workoutID=workoutID)
 
-        # add each exercise to saved table with same workoutid
+            # add each exercise to saved table with same workoutid
 
-        for exNumber in range(int(request.form.get("numberExercises"))):
+            for exNumber in range(int(request.form.get("numberExercises"))):
 
-            groups = keptExercises[exNumber][1]
-            if request.form.get("edit") == '1' and (exNumber in keptExercises):
-                types = keptExercises[exNumber][2]
-                exerciseName = keptExercises[exNumber][0]
-            else:
-                exerciseInfo = db.execute("SELECT * FROM :table WHERE id = :exID", table=user_id,
-                                          exID=request.form.get("createWorkoutSelect" + str(exNumber)))[0]
-                groups = exerciseInfo['groups']
-                types = exerciseInfo["type"]
-                exerciseName = exerciseInfo["name"]
+                groups = keptExercises[exNumber][1]
+                if request.form.get("edit") == '1' and (exNumber in keptExercises):
+                    types = keptExercises[exNumber][2]
+                    exerciseName = keptExercises[exNumber][0]
+                else:
+                    exerciseInfo = db.execute("SELECT * FROM BB_Workouts WHERE id = :exID", table=user_id,
+                                              exID=request.form.get("createWorkoutSelect" + str(exNumber)))[0]
+                    groups = exerciseInfo['group']
+                    types = exerciseInfo["muscle"]
+                    exerciseName = exerciseInfo["name"]
 
-            db.execute("INSERT INTO saved (workoutID, workoutName, exerciseName, groups, type, userID, setCount, repCount, weight, date) VALUES (:workoutID\
-                    , :workoutName, :exerciseName, :groups, :types, :userID, :setCount, :repCount, :weight, :date)", workoutID=workoutID, workoutName=request.form.get("workoutName"), userID=user_id, setCount=request.form.get("sets" + str(exNumber)), repCount=request.form.get("reps" + str(exNumber)), weight=request.form.get("weight" + str(exNumber)), date=date.today(), groups=groups, types=types, exerciseName=exerciseName)
+                db.execute("INSERT INTO saved (workoutID, workoutName, exerciseName, groups, type, userID, setCount, repCount, weight, date) VALUES (:workoutID\
+                        , :workoutName, :exerciseName, :groups, :types, :userID, :setCount, :repCount, :weight, :date)", workoutID=workoutID, workoutName=request.form.get("workoutName"), userID=user_id, setCount=request.form.get("sets" + str(exNumber)), repCount=request.form.get("reps" + str(exNumber)), weight=request.form.get("weight" + str(exNumber)), date=date.today(), groups=groups, types=types, exerciseName=exerciseName)
 
         return redirect("/saved")
 

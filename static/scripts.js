@@ -176,7 +176,7 @@ function editWorkout(id) {
 function openExerciseModal(id) {
     $.get("/exercise?id=" + id, function (data) {
 
-        $("#exercise-description").html(data);
+        $("#exercise-description" + id).html(data);
 
     });
 }
