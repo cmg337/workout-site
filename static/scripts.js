@@ -30,7 +30,6 @@ $(document).ready(function() {
 
 
 
-
   // check if register meets requirements before sending to server
   $("#register-form").on("submit", function(event) {
     // variable to check if form passes test
@@ -88,33 +87,6 @@ $(document).ready(function() {
   });
 
 
-  //check if add meets requirements before sending to server
-  $("#add-form").on('submit', function(event) {
-
-    //check if name given
-    if ($("#name").val() === "") {
-      $("#name").addClass("form-control is-invalid");
-      $("#name-feedback").html("Exercise name required");
-      event.preventDefault();
-      return false;
-    } else {
-      $("#first-name").removeClass("form-control is-invalid");
-      $("#first-name").addClass("form-control is-valid");
-      $("#add-alert").hide();
-    }
-  });
-
-  // check edit form has non blank name
-  $("#edit-form").on('submit', function(event) {
-
-    //check if name given
-    if ($("#newName").val() === "") {
-      $("#newName").addClass("form-control is-invalid");
-      $("#newName-feedback").html("Exercise name required");
-      event.preventDefault();
-      return false;
-    };
-  });
 
 
   // listen for number of workouts to create form
@@ -154,29 +126,6 @@ $(document).ready(function() {
 
 
 });
-
-
-
-// handle deleting exercises from database
-function deleteExercise(id) {
-  $('#deleteModal').modal('hide');
-  // create form to submit
-  var form = '<form action="/edit" method="post" hidden> <input name="edit_type" value="delete" /><input name="id" value="' + id + '"/></form>';
-  $(form).appendTo('body').submit();
-}
-
-// handle editing exercises from database
-function editExercise(id) {
-  // create form to submit
-  var form = '<form action="/edit" method="post" hidden> <input name="edit_type" value="edit" /><input name="id" value="' + id + '"/></form>';
-  $(form).appendTo('body').submit();
-}
-
-// handle delete all button
-function deleteAll() {
-  var form = '<form action="/edit" method="post"> <input name="edit_type" value="deleteAll"/></form>';
-  $(form).appendTo('body').submit();
-}
 
 
 
@@ -221,4 +170,13 @@ function editWorkout(id) {
   // create form to submit
   var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="edit" /><input name="id" value="' + id + '"/></form>';
   $(form).appendTo('body').submit();
+}
+
+
+function openExerciseModal(id) {
+    $.get("/exercise?id=" + id, function (data) {
+
+        $("#exercise-description" + id).html(data);
+
+    });
 }

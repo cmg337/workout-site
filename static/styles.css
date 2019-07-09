@@ -28,11 +28,20 @@
   align-items: center;
 }
 
-.workout-img{
-  max-height: 200px;
+.workout-img {
+    width: 100%;
+    height: auto;
+}
+.img-container{
+    flex-basis: auto;
 }
 
 #workout-img-div{
     display: flex;
     align-content: flex-end;
+    flex-basis: auto;
+}
+
+.exercise-info-div{
+    flex-basis: auto;
 }
