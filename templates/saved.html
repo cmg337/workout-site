@@ -7,7 +7,7 @@
 
 {% block main %}
 
-    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteAllWorkouts">Delete All</button>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAllWorkouts">Delete All</button>
 
     <!-- Modal for delete all confirmation-->
     <div class="modal fade" id="deleteAllWorkouts" tabindex="-1" role="dialog" aria-labelledby="deleteAllWorkoutsTitle" aria-hidden="true">
@@ -58,7 +58,7 @@
 
 
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" onclick="editWorkout({{id}})" id="edit-{{id}}" class="btn btn-outline-warning">Edit</button>
+                            <button type="button" onclick="editWorkout({{id}})" id="edit-{{id}}" class="btn btn-outline-dark">Edit</button>
                             <button type="button"  class="btn btn-outline-danger"
                                 data-toggle="modal" data-target="#deleteWorkoutModal{{id}}">Delete</button>
                         </div>

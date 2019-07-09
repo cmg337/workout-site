@@ -128,26 +128,30 @@ $(document).ready(function() {
 });
 
 
-
 // save workouts
 function saveWorkout(workout) {
 
   var workoutJSON = {
-    'length': workout.length
+      'length': workout.length,
+      'name': $('#random-workout-name').text()
   };
-  for (var exercise in workout) {
-    workoutJSON[exercise] = workout[exercise]['id'];
+    for (var exercise in workout) {
+        workoutJSON[exercise] = workout[exercise]['id'];
   }
 
   $.post('/saveWorkout', workoutJSON, function(data) {
     if (data == 'true') {
-      $('#saveWorkout').prop('disabled', true);
-      $('#saveWorkout').html('Saved');
+        $('#saveWorkout').prop('disabled', true);
+        $('#saveWorkout').html('Saved');
+        $('#close-save-modal').click();
+        $('#save-modal-btn').prop('disabled', true);
     } else {
-      $('#saveWorkout').prop('disabled', true);
-      $('#saveWorkout').html('Error');
-      $('#saveWorkout').attr('class', 'btn btn-warning')
-      $('#createAlert').show();
+        $('#saveWorkout').prop('disabled', true);
+        $('#saveWorkout').html('Error');
+        $('#saveWorkout').attr('class', 'btn btn-warning')
+        $('#createAlert').show();
+        $('#close-save-modal').click();
+        $('#save-modal-btn').prop('disabled', true);
     }
   });
 }

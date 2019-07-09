@@ -222,7 +222,7 @@ def saveWorkout():
         exerciseID=request.form.get(str(exerciseNum))
         # insert info into saved table
         db.execute("INSERT INTO saved (workoutID, workoutName, userID, date, setCount, repCount, weight, exerciseID) VALUES (:workoutID, :workoutName, :userID, :date, 0, 0 ,0, :exerciseID)",
-                   workoutName='Saved Workout ' + str(datetime.now())[0:-10], userID=user_id, date=date.today(), workoutID=workoutID, exerciseID=exerciseID)
+                   workoutName= request.form.get('name'), userID=user_id, date=date.today(), workoutID=workoutID, exerciseID=exerciseID)
     return 'true'
 
 
