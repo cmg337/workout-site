@@ -260,19 +260,19 @@ def saved():
                        userID=user_id)
             return redirect("/saved")
 
-        # pull up edit form for workout AKA create form with preinserted old values
+        # pull up edit form for workout ie. create form with preinserted old values
         elif request.form.get("edit_type") == 'edit':
             workout = db.execute(
                 "SELECT * FROM saved WHERE workoutID = :workoutID", workoutID=request.form.get("id"))
-            user_id = str(session["user_id"])
-            exerciseTable = db.execute("SELECT * FROM :table", table=user_id)
-            return render_template("create.html", error=0, edit=1, workout=workout, exerciseTable=exerciseTable)
+            exerciseList = [];
+            for exercise in workout:
+                newEx = db.execute("SELECT * FROM BB_Workouts WHERE id = :exID", exID = exercise["exerciseID"])
+                exerciseList.append(newEx[0])
+            return render_template("create.html", error=0, edit=1, workout=workout, exerciseList=exerciseList)
 
-        # open edit page for workout
+        # open error form otherwise
         else:
-            workout_info = db.execute(
-                "SELECT * FROM saved WHERE workoutID = :workoutID", workoutID=request.form.get("id"))[0]
-            return render_template("editWorkout.html", workout_info=workout_info)
+            return render_template("error.html")
 
 
 @app.route("/create", methods=["GET", "POST"])
@@ -281,9 +281,7 @@ def create():
     """ create new workouts or edits existing workout """
     # load page at get request
     if request.method == "GET":
-        exerciseTable = db.execute('SELECT * FROM BB_Workouts')
-
-        return render_template("create.html", error=0, exerciseTable=exerciseTable, edit=0)
+        return render_template("create.html", error=0, edit=0)
 
     # add workout at post
     else:
@@ -310,41 +308,29 @@ def create():
                 return render_template("create.html", error=1, edit=0)
             workoutID = idList[0]
 
-        # handle editing workouts
+        # if edited workout, get previous id
         else:
             workoutID = int(request.form.get("id"))
-            keptExercises = {}
-            for exNumber in range(int(request.form.get("numberExercises"))):
-                if request.form.get("createWorkoutSelect" + str(exNumber)) == 'same':
-                    keptExercises[exNumber] = [request.form.get("nameActual" + str(exNumber)), request.form.get(
-                        "groups" + str(exNumber)), request.form.get("type" + str(exNumber))]
-
+            # check for malicious attempt to overwrite other user's data
+            if user_id != db.execute("SELECT userID FROM saved WHERE workoutID = : workoutID", workoutID = workoutID)[0]['userID']:
+                render_template("error.html")
+            # delete previous workout if exists
             db.execute(
                 "DELETE FROM saved WHERE workoutID = :workoutID", workoutID=workoutID)
 
-            # add each exercise to saved table with same workoutid
+         # add each exercise to saved table with same workoutid
 
-            for exNumber in range(int(request.form.get("numberExercises"))):
+        for exNumber in range(int(request.form.get("numberExercises"))):
 
-                groups = keptExercises[exNumber][1]
-                if request.form.get("edit") == '1' and (exNumber in keptExercises):
-                    types = keptExercises[exNumber][2]
-                    exerciseName = keptExercises[exNumber][0]
-                else:
-                    exerciseInfo = db.execute("SELECT * FROM BB_Workouts WHERE id = :exID", table=user_id,
-                                              exID=request.form.get("createWorkoutSelect" + str(exNumber)))[0]
-                    groups = exerciseInfo['group']
-                    types = exerciseInfo["muscle"]
-                    exerciseName = exerciseInfo["name"]
+            exerciseInfo = db.execute("SELECT id FROM BB_Workouts WHERE name = :name", name=request.form.get("name" + str(exNumber)))[0]
+            exerciseID = exerciseInfo["id"]
+            workoutName=request.form.get("workoutName")
+            setCount=request.form.get("sets" + str(exNumber))
+            repCount=request.form.get("reps" + str(exNumber))
+            weight=request.form.get("weight" + str(exNumber))
 
-                db.execute("INSERT INTO saved (workoutID, workoutName, exerciseName, groups, type, userID, setCount, repCount, weight, date) VALUES (:workoutID\
-                        , :workoutName, :exerciseName, :groups, :types, :userID, :setCount, :repCount, :weight, :date)", workoutID=workoutID, workoutName=request.form.get("workoutName"), userID=user_id, setCount=request.form.get("sets" + str(exNumber)), repCount=request.form.get("reps" + str(exNumber)), weight=request.form.get("weight" + str(exNumber)), date=date.today(), groups=groups, types=types, exerciseName=exerciseName)
+            db.execute("INSERT INTO saved (workoutID, workoutName, userID, setCount, repCount, weight, date) VALUES (:workoutID\
+                    , :workoutName, :userID, :setCount, :repCount, :weight, :date)", workoutID=workoutID, workoutName=workoutName, userID=user_id, setCount=setCount, repCount=repCount, weight=weight, date=date.today())
 
         return redirect("/saved")
 
-
-@app.route("/editWorkout", methods=["POST"])
-@login_required
-def editWorkout():
-    """ Return Individual Edit Form for Workout """
-    return render_template('editWorkout.html')
