@@ -1,5 +1,5 @@
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, jsonify
 from flask_session import Session
 import random
 from tempfile import mkdtemp
@@ -234,6 +234,7 @@ def saved():
     if request.method == "GET":
         # get workouts where user id equals session id
         user_id = str(session["user_id"])
+        exerciseDict = {}
 
         # http://www.martinbroadhurst.com/removing-duplicates-from-a-list-while-preserving-order-in-python.html
         saved = db.execute(
@@ -241,9 +242,13 @@ def saved():
         seen = set()
         ids = [x['workoutID'] for x in saved if not (
             x['workoutID'] in seen or seen.add(x['workoutID']))]
-        # ids = set([exercise["workoutID"] for exercise in saved])
-        # render template
-        return render_template("saved.html", saved=saved, ids=ids)
+
+        # add each exercise to dictionary
+        for ex in saved:
+            exerciseDict[ex["exerciseID"]] = db.execute("SELECT * FROM BB_Workouts WHERE id = :exID", exID=ex["exerciseID"])[0]
+        
+
+        return render_template("saved.html", saved=saved, ids=ids, exerciseDict = exerciseDict)
 
     # handle post method
     else:
@@ -334,3 +339,12 @@ def create():
 
         return redirect("/saved")
 
+@app.route("/search", methods=["GET"])
+@login_required
+def search():
+    q = request.args.get("query")
+    print(q)
+    if not q:
+        q = ""
+    searchResults = db.execute('SELECT * FROM BB_Workouts WHERE (name LIKE :q OR muscle LIKE :q OR equipment LIKE :q OR type LIKE :q)', q= "% " + q + '%' )
+    return jsonify(searchResults)

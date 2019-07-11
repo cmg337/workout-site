@@ -125,68 +125,85 @@ $(document).ready(function () {
     });
 
     //use typeahead for search results on create workout
-    //  $("search-bar").typeahead()
+    $(".search-bar").typeahead({
+        highlight: true,
+        minLength: 1
 
-
-    //});
+    },
+    {
+        display: "name" ,
+        name: "exerciseSearch",
+        source: searchExercises,
+        limit: 30
+    })
 });
 
 
-    //button functions
+//button functions
 
-    // save workouts
-    function saveWorkout(workout) {
+// save workouts
+function saveWorkout(workout) {
 
-        var workoutJSON = {
-            'length': workout.length,
-            'name': $('#random-workout-name').text()
-        };
-        for (var exercise in workout) {
-            workoutJSON[exercise] = workout[exercise]['id'];
+    var workoutJSON = {
+        'length': workout.length,
+        'name': $('#random-workout-name').text()
+    };
+    for (var exercise in workout) {
+        workoutJSON[exercise] = workout[exercise]['id'];
+    }
+
+    $.post('/saveWorkout', workoutJSON, function (data) {
+        if (data == 'true') {
+            $('#saveWorkout').prop('disabled', true);
+            $('#saveWorkout').html('Saved');
+            $('#close-save-modal').click();
+            $('#save-modal-btn').prop('disabled', true);
+        } else {
+            $('#saveWorkout').prop('disabled', true);
+            $('#saveWorkout').html('Error');
+            $('#saveWorkout').attr('class', 'btn btn-warning')
+            $('#createAlert').show();
+            $('#close-save-modal').click();
+            $('#save-modal-btn').prop('disabled', true);
         }
+    });
+}
 
-        $.post('/saveWorkout', workoutJSON, function (data) {
-            if (data == 'true') {
-                $('#saveWorkout').prop('disabled', true);
-                $('#saveWorkout').html('Saved');
-                $('#close-save-modal').click();
-                $('#save-modal-btn').prop('disabled', true);
-            } else {
-                $('#saveWorkout').prop('disabled', true);
-                $('#saveWorkout').html('Error');
-                $('#saveWorkout').attr('class', 'btn btn-warning')
-                $('#createAlert').show();
-                $('#close-save-modal').click();
-                $('#save-modal-btn').prop('disabled', true);
-            }
-        });
+// handle delete all button for workouts
+function deleteAllWorkouts() {
+    var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="deleteAll"/></form>';
+    $(form).appendTo('body').submit();
+}
+
+// handle deleting workouts from database
+function deleteWorkout(id) {
+    // create form to submit
+    var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="delete" /><input name="id" value="' + id + '"/></form>';
+    $(form).appendTo('body').submit();
+}
+
+// handle editing workouts from database
+function editWorkout(id) {
+    // create form to submit
+    var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="edit" /><input name="id" value="' + id + '"/></form>';
+    $(form).appendTo('body').submit();
+}
+
+//loads html for exercise description when modal is opened
+function openExerciseModal(id) {
+    $.get("/exercise?id=" + id, function (data) {
+
+        $("#exercise-description" + id).html(data);
+
+    });
+}
+
+function searchExercises(query, syncResults, asyncResults) {
+    let param = {
+        query: query
     }
+    $.getJSON("/search", param, function (data) {
+        asyncResults(data);
+    })
 
-    // handle delete all button for workouts
-    function deleteAllWorkouts() {
-        var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="deleteAll"/></form>';
-        $(form).appendTo('body').submit();
-    }
-
-    // handle deleting workouts from database
-    function deleteWorkout(id) {
-        // create form to submit
-        var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="delete" /><input name="id" value="' + id + '"/></form>';
-        $(form).appendTo('body').submit();
-    }
-
-    // handle editing workouts from database
-    function editWorkout(id) {
-        // create form to submit
-        var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="edit" /><input name="id" value="' + id + '"/></form>';
-        $(form).appendTo('body').submit();
-    }
-
-    //loads html for exercise description when modal is opened
-    function openExerciseModal(id) {
-        $.get("/exercise?id=" + id, function (data) {
-
-            $("#exercise-description" + id).html(data);
-
-        });
-    }
+}

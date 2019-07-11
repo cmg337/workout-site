@@ -98,7 +98,7 @@
                             </div>
                             {% for workout_ in saved %}
                                 {% if workout_["workoutID"] == id %}
-                                    <p class="mb-1"><b>{{workout_["exerciseName"]}}</b></p>
+                                    <p class="mb-1"><b>{{exerciseDict[workout_["exerciseID"]]["name"]}}</b></p>
                                     <small>Sets: {{workout_["setCount"]}}</small>
                                     <small>Reps: {{workout_["repCount"]}}</small>
                                     <small>Weight: {{workout_["weight"]}} lbs.</small>

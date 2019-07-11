@@ -50,9 +50,9 @@
                             <span class="input-group-text" id="basic-addon1">Exercise Name</span>
                         </div>
                         {% if edit == 1 and n < exerciseList|length %}
-                        <input type="text" class="form-control" id="search-bar" name="name{{n}}" placeholder="{{exerciseList[n]['name']}}" value="{{exerciseList[n]['name']}}" aria-label="exerciseName" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control search-bar" id="search-bar" name="name{{n}}" placeholder="{{exerciseList[n]['name']}}" value="{{exerciseList[n]['name']}}" aria-label="exerciseName" aria-describedby="basic-addon1">
                         {% else %}
-                        <input type="text" class="form-control" id="search-bar" name="name{{n}}" placeholder="Exercise Name" aria-label="exerciseName" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control search-bar" id="search-bar" name="name{{n}}" placeholder="Exercise Name" aria-label="exerciseName" aria-describedby="basic-addon1">
                         {% endif %}
                     </div>
                 </div>
