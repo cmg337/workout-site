@@ -107,19 +107,37 @@ $(document).ready(function () {
 
         //check if name given
         if ($("#workoutName").val() === "") {
-            $("#workoutName").addClass("form-control is-invalid");
+            $("#workoutName").addClass("is-invalid");
             $("#name-feedback").html("Workout name required");
             event.preventDefault();
             return false;
+        } else {
+            $("#workoutName").removeClass("is-invalid");
         };
 
         // check number of exercises
         if ($("#numberExercises").val() === "") {
-            $("#numberExercises").addClass("form-control is-invalid");
+            $("#numberExercises").addClass("is-invalid");
             $("#number-feedback").html("Number required");
             event.preventDefault();
             return false;
+        } else {
+            $("#numberExercises").removeClass("is-invalid");
         };
+        // remove invalid class if exists on exercise
+        $('.tt-input').each(function () {
+            $(this).removeClass("is-invalid")
+        });
+        //check if name exists and is all alphabetical and if is visible
+        $('.tt-input').each(function (i) {
+            console.log($(this).val())
+            if (!/[a-z]+/i.test($(this).val()) && $(this).is(":visible") ) {
+                $(this).addClass("is-invalid");
+                $("#ex-feedback" + i).html("Input valid exercise name");
+                event.preventDefault();
+                return false;
+            }
+        });
 
 
     });
@@ -127,26 +145,28 @@ $(document).ready(function () {
     //use typeahead for search results on create workout
     $(".search-bar").typeahead({
         highlight: true,
-        minLength: 1
-
+        minLength: 0
     },
     {
         display: "name" ,
         name: "exerciseSearch",
         source: searchExercises,
-        limit: 30
-    })
+        limit: 35
+        })
+
+
+
 });
 
 
 //button functions
 
-// save workouts
+// save randomely generated workout
 function saveWorkout(workout) {
 
     var workoutJSON = {
         'length': workout.length,
-        'name': $('#random-workout-name').text()
+        'name': $('#random-workout-name').val()
     };
     for (var exercise in workout) {
         workoutJSON[exercise] = workout[exercise]['id'];
@@ -197,7 +217,7 @@ function openExerciseModal(id) {
 
     });
 }
-
+//typeahead function to generate list of workouts asyn
 function searchExercises(query, syncResults, asyncResults) {
     let param = {
         query: query
