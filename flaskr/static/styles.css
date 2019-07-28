@@ -1,21 +1,26 @@
-/* .h2{
-    text-align:center;
-    margin-bottom:3%;
+/*Index Page*/
+.index-group-head {
+    font-weight: bold;
 }
-
-.butt{
-    margin-top:1%;
-}
-
-.saveWorkout{
-    width: 100%;
+.index-head {
+    margin-bottom: 35px;
     text-align: center;
-    margin-top: 1%;
+}
+.index-row{
+    margin: 35px 0;
+}
+.index-button{
+    margin-top: 40px;
+}
+@media(max-width:575px){
+    .index-group-head{
+        margin-top:30px;
+    }
+    .index-row {
+        margin: 0;
+    }
 }
 
-.savedWorkout{
-    flex-wrap: wrap;
-} */
 
 /* generated workout page */
 .ex-info{

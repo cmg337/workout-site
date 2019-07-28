@@ -3,7 +3,7 @@ import tempfile
 
 import pytest
 
-import application
+from flaskr import create_app
 
 @pytest.fixture
 def client():

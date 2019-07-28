@@ -1,35 +1,6 @@
 // wait for page to load
 $(document).ready(function () {
 
-    // check if random workout submission had valid options selected
-    $("#workout_form").on("submit", function (event) {
-        const ERROR_MESSAGE = "At least one box must be checked for each option"
-
-
-        // map through each of the 4 groups of checkboxes
-        Array.prototype.map.call(document.getElementsByClassName("selection-group"),
-            function (elem) {
-                // create checking variable and map through all checkboxes of section
-                var checker = false;
-                Array.prototype.map.call(elem.children[1].children,
-                    function (child) {
-                        if (child.firstElementChild.checked) {
-                            checker = true;
-                        }
-                    })
-                // if checker was not changed to true, show error
-                if (!checker) {
-                    event.preventDefault();
-                    $('#alert').addClass('alert alert-danger');
-                    $('#alert').html(ERROR_MESSAGE);
-                    return false;
-                }
-            })
-    });
-
-
-
-
     // check if register meets requirements before sending to server
     $("#register-form").on("submit", function (event) {
         // variable to check if form passes test
@@ -89,7 +60,7 @@ $(document).ready(function () {
 
 
 
-    // listen for number of workouts to create form
+    // listen for number of exercises to create form
     $("#numberExercises").change(function () {
 
         var number = $("#numberExercises").val();
