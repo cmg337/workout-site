@@ -40,7 +40,7 @@ $(document).ready(function () {
         } else {
             $("#index-num-label").removeClass("col-sm-6")
             $("#index-num-label").addClass("col-sm-3")
-            $("#index-num").removeClass("col-sm-6")
+            $("#index-num").removeClass("col-sm-6 ")
             $("#index-num").addClass("col-sm-9")
         }
     }

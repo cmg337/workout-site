@@ -132,33 +132,7 @@ $(document).ready(function () {
 
 //button functions
 
-// save randomely generated workout
-function saveWorkout(workout) {
 
-    var workoutJSON = {
-        'length': workout.length,
-        'name': $('#random-workout-name').val()
-    };
-    for (var exercise in workout) {
-        workoutJSON[exercise] = workout[exercise]['id'];
-    }
-
-    $.post('/saveWorkout', workoutJSON, function (data) {
-        if (data == 'true') {
-            $('#saveWorkout').prop('disabled', true);
-            $('#saveWorkout').html('Saved');
-            $('#close-save-modal').click();
-            $('#save-modal-btn').prop('disabled', true);
-        } else {
-            $('#saveWorkout').prop('disabled', true);
-            $('#saveWorkout').html('Error');
-            $('#saveWorkout').attr('class', 'btn btn-warning')
-            $('#createAlert').show();
-            $('#close-save-modal').click();
-            $('#save-modal-btn').prop('disabled', true);
-        }
-    });
-}
 
 // handle delete all button for workouts
 function deleteAllWorkouts() {
