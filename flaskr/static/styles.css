@@ -22,34 +22,7 @@
 }
 
 
-/* generated workout page */
-.ex-info{
-  padding-left: 1%;
-}
 
-.workout-container{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.workout-img {
-    width: 100%;
-    height: auto;
-}
-.img-container{
-    flex-basis: auto;
-}
-
-#workout-img-div{
-    display: flex;
-    align-content: flex-end;
-    flex-basis: auto;
-}
-
-.exercise-info-div{
-    flex-basis: auto;
-}
 
 /* Stylize typeahead.js a la http://twitter.github.io/typeahead.js/css/examples.css */
 .tt-menu {

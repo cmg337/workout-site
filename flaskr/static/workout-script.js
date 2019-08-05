@@ -29,22 +29,25 @@ function saveWorkout(workout) {
 
 $(document).ready(function(){
     //add listener to dynamically change column width
-    function changeColumn(x) {
+     var changeColumn = function(x) {
         if (x.matches) { // If media query matches
             $(".workout-desc").removeClass("col-sm-3")
-            $(".workout-desc").addClass("col-sm-6")
-            $(".workout-item").removeClass("col-sm-9")
-            $(".workout-item").addClass("col-sm-6")
+            $(".workout-desc").addClass("col-sm-7")
 
         } else {
-            $(".workout-desc").removeClass("col-sm-6")
+            $(".workout-desc").removeClass("col-sm-7")
             $(".workout-desc").addClass("col-sm-3")
-            $(".workout-item").removeClass("col-sm-6 ")
-            $(".workout-item").addClass("col-sm-9")
         }
     }
 
+    var fitImages = function(x) {
+        if (x.matches) {
+
+        }
+    }
+
+    var width1200 = window.matchMedia("(max-width: 1200px)")
     var width991 = window.matchMedia("(max-width: 991px)")
-    changeColumn(width991) // Call listener function at run time
-    width991.addListener(changeColumn) // Attach listener function on state changes
+    changeColumn(width1200) // Call listener function at run time
+    width1200.addListener(changeColumn) // Attach listener function on state changes
 })
