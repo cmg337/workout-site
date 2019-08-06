@@ -41,7 +41,7 @@ Your Workout
                         <dd class="col-sm-9 workout-item">{{ workout["level"] }}</dd>
                     </dl>
                 </div>
-                <div id="workout-img-div" link="{{workout['img']}}" num="{{workout['numImgs']}}">
+                <div class="workout-img-div" link="{{workout['img']}}" num="{{workout['numImgs']}}">
                     {% for num in range(workout["numImgs"]) %}
                     <div class="img-container"><img class="workout-img" src="{{workout['img'] + (num+1)|string() + '.jpg'}}" /></div>
                     {% endfor %}
