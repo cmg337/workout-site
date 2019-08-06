@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\static",
-    "\\templates"
+    "\\flaskr",
+    "\\flaskr\\static",
+    "\\flaskr\\templates",
+    "\\instance"
   ],
-  "SelectedNode": "\\scrape.py",
+  "SelectedNode": "\\flaskr\\templates\\saved.html",
   "PreviewInSolutionExplorer": false
 }

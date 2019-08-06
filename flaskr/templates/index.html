@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+    {% block title %}
+        Random Workout Generator
+    {% endblock %}
+
+{%block scripts%}
+    <script src="/static/index-script.js"></script>
+{%endblock%}
+
+{% block main %}
+
+    <div role="alert" id="alert">
+    </div>
+
+    <p class="h2 index-head">Random Workout Generator</p>
+    <p class="h4 index-head">Select Options:</p>
+
+    <form id="workout_form" action="/workout" method="post">
+        <div class="form-group row index-row">
+            <label for="number" class="col-sm-3 col-form-label index-group-head" id="index-num-label">Number of Workouts</label>
+            <div class="col-sm-9" id="index-num">
+                <select class="form-control" id="number" name="number">
+                    {% for i in range(12) %}
+                        <option value="{{i + 1}}">{{i + 1}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row selection-group index-row">
+                <div class="col-sm-3 index-group-head">Equipment</div>
+                <div class="col-sm-3 index-group-sel">
+                    {% for equipment in EQUIPMENTS %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name={{equipment}} id={{equipment}} checked>
+                        <label class="form-check-label" for={{equipment}}>
+                            {{equipment}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="col-sm-3 index-group-head">Muscle Groups</div>
+                <div class="col-sm-3 index-group-sel">
+                    {% for muscle in MUSCLES %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name={{muscle}} id={{muscle}} checked>
+                        <label class="form-check-label" for={{muscle}}>
+                            {{muscle}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+        </div>
+
+        <div class="form-group row selection-group index-row">
+
+                <div class="col-sm-3 index-group-head">Difficulty Level</div>
+                <div class="col-sm-3 index-group-sel">
+                    {% for level in LEVELS %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name={{level}} id={{level}} checked>
+                        <label class="form-check-label" for={{level}}>
+                            {{level}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="col-sm-3 index-group-head">Workout Types</div>
+                <div class="col-sm-3 index-group-sel">
+                    {% for type in TYPES %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name={{type}} id={{type}} checked>
+                        <label class="form-check-label" for={{type}}>
+                            {{type}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+        </div>
+
+            <button type="submit" id="generate_button" class="btn btn-primary btn-lg btn-block index-button">Generate Workout</button>
+</form>
+
+{% endblock %}

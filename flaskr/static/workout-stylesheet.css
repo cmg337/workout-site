@@ -1,0 +1,31 @@
+
+/* generated workout page */
+.ex-info {
+    padding-left: 1%;
+}
+
+.workout-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.workout-img {
+    width: 100%;
+    height: auto;
+}
+
+.img-container {
+    flex-basis: auto;
+}
+
+#workout-img-div {
+    display: flex;
+    align-content: flex-end;
+    flex-basis: 60%;
+}
+
+.exercise-info-div {
+    flex-basis: 40%;
+}
+
