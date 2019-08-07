@@ -1,28 +1,9 @@
-/*Index Page*/
-.index-group-head {
+.bold{
     font-weight: bold;
 }
-.index-head {
-    margin-bottom: 35px;
-    text-align: center;
+.exercise-group{
+    margin-bottom: 20px;
 }
-.index-row{
-    margin: 35px 0;
-}
-.index-button{
-    margin-top: 40px;
-}
-@media(max-width:575px){
-    .index-group-head{
-        margin-top:30px;
-    }
-    .index-row {
-        margin: 0;
-    }
-}
-
-
-
 
 /* Stylize typeahead.js a la http://twitter.github.io/typeahead.js/css/examples.css */
 .tt-menu {

@@ -4,6 +4,10 @@
 {% if edit == 1 %}Edit Workout{% else %} Create Workout{% endif %}
 {% endblock %}
 
+{%block scripts%}
+    <link href="/static/create-stylesheet.css" rel="stylesheet">
+{%endblock%}
+
 {% block main %}
 <!-- change name based on edit/new workout -->
 <p class="h2">{% if edit == 1 %}Edit Workout{% else %} Create Workout{% endif %}</p>
@@ -12,7 +16,7 @@
 
     <!-- change name + edit values based on edit/new workout -->
     {% if edit == 1 %}
-    <input type="number" name="id" id="id" value="{{workout['workoutID']}}" hidden />
+    <input type="number" name="id" id="id" value="{{workout[0]['workoutID']}}" hidden />
     <input type="number" name="edit" id="edit" value="1" hidden />
     {% else %}
     <input type="number" name="edit" id="edit" value="0" hidden />
@@ -31,7 +35,7 @@
     <div class="form-group">
         <label for="numberExercises">Number of Exercises</label>
         <input type="number" class="form-control" id="numberExercises" name="numberExercises" placeholder="Number of Exercises" min="1" max="12"
-               {% if edit==1 %} placeholder="{{workout|length}}" value={{workout|length}}" {% endif %}>
+               {% if edit==1 %} value="{{workout|length}}" {% endif %}>
         <div id="number-feedback" class="invalid-feedback">
         </div>
     </div>
@@ -42,9 +46,9 @@
     {% if error == 0 %}
     <!-- add workout info if sent by edit through jinja if statements -->
     {% for n in range(12) %}
-    <div class="form-row" id="exercise{{n}}" name="exercise{{n}}" {% if edit !=1 or workout|length < n + 1 %} style="display: none;" {% endif %}>
+    <div class="form-row exercise-group" id="exercise{{n}}" name="exercise{{n}}" {% if edit !=1 or workout|length < n + 1 %} style="display: none;" {% endif %}>
         <div class="form-group col-md-6">
-            <label for="search-bar{{n}}">Exercise {{n+1}}</label>
+            <label for="search-bar{{n}}" class="bold">Exercise {{n+1}}</label>
                 {% if edit == 1 and n < exerciseList|length %}
                 <input type="text" class="form-control search-bar" id="search-bar{{n}}" name="name{{n}}" placeholder="{{exerciseList[n]['name']}}" value="{{exerciseList[n]['name']}}" aria-label="exerciseName" aria-describedby="basic-addon1" autocomplete="new-password">
                 {% else %}
@@ -56,24 +60,24 @@
             <label for="sets{{n}}">Sets</label>
             <input id="sets{{n}}" name="sets{{n}}" class="form-control" type="number" min="0" max="100"
                     {% if edit==1 and n < workout|length %} value="{{ workout[n]['setCount'] }}" placeholder="{{ workout[n]['setCount'] }}"
-            {% else %} placeholder="Number of Sets" value="0"{% endif %}>
+            {% else %} placeholder="Number of Sets" {% endif %}>
         </div>
         <div class="form-group col-md-2">
             <label for="reps{{n}}">Reps</label>
             <input id="reps{{n}}" name="reps{{n}}" class="form-control" type="number" min="0" max="1000"
                     {% if edit==1 and n < workout|length %} value="{{ workout[n]['repCount'] }}" placeholder="{{ workout[n]['repCount'] }}"
-            {% else %} placeholder="Number of Reps" value="0"{% endif %}>
+            {% else %} placeholder="Number of Reps" {% endif %}>
         </div>
         <div class="form-group col-md-2">
-            <label for="weight{{n}}">Weight</label>
+            <label for="weight{{n}}">Weight(lbs.)</label>
             <input id="weight{{n}}" name="weight{{n}}" class="form-control" type="number" min="0" max="5000"
-                    {% if edit==1 and n < workout|length %} value="{{ workout[n]['weight'] }}" placeholder="{{ workout[n]['weight'] }}"
-            {% else %} placeholder="Weight(lbs)" value="0"{% endif %}>
+                    {% if edit==1  and n < workout|length %} value="{{ workout[n]['weight'] }}" placeholder="{{ workout[n]['weight'] }}"
+            {% else %} placeholder="Weight(lbs)" {% endif %}>
         </div>
     </div>
     {% endfor %}
 
-    <button type="submit" id="createButton" class="btn btn-primary">Create Workout</button>
+    <button type="submit" id="createButton" class="btn btn-primary">{% if edit == 1 %} Save Workout {% else %} Create Workout {% endif %}</button>
 
     {% else %}
 

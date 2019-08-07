@@ -101,7 +101,6 @@ $(document).ready(function () {
         });
         //check if name exists and is all alphabetical and if is visible
         $('.tt-input').each(function (i) {
-            console.log($(this).val())
             if (!/[a-z]+/i.test($(this).val()) && $(this).is(":visible") ) {
                 $(this).addClass("is-invalid");
                 $("#ex-feedback" + i).html("Input valid exercise name");

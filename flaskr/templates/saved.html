@@ -97,12 +97,15 @@
                                 <h5 class="mb-1"><b><u>{{workout["workoutName"]}}</u></b></h5>
                             </div>
                             {% for workout_ in saved %}
-                                {% if workout_["workoutID"] == id %}
-                                    <p class="mb-1"><b>{{exerciseDict[workout_["exerciseID"]]["name"]}}</b></p>
-                                    <small>Sets: {{workout_["setCount"]}}</small>
-                                    <small>Reps: {{workout_["repCount"]}}</small>
-                                    <small>Weight: {{workout_["weight"]}} lbs.</small>
-                                {% endif %}
+                            {% if workout_["workoutID"] == id %}
+                            <p class="mb-1"><b>{{exerciseDict[workout_["exerciseID"]]["name"]}}</b></p>
+                            <small>{% if workout_["setCount"] is number %} {{workout_["setCount"]}} {% else %} 0 {% endif %}</small>
+                            <small> x </small>
+                            <small>{% if workout_["repCount"] is number %} {{workout_["repCount"]}} {% else %} 0 {% endif %}</small>
+                            <small> at </small>
+                            <small>{% if workout_["weight"] is number %} {{workout_["weight"]}} {% else %} 0 {% endif %}</small>
+                            <small> lbs. </small>
+                            {% endif %}
                             {% endfor %}
                         </a>
                     </div>
