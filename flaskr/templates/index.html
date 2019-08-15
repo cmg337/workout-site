@@ -6,6 +6,7 @@
 
 {%block scripts%}
     <script src="/static/index-script.js"></script>
+    <link href="/static/index-stylesheet.css" rel="stylesheet">
 {%endblock%}
 
 {% block main %}
@@ -13,12 +14,12 @@
     <div role="alert" id="alert">
     </div>
 
-    <p class="h2 index-head">Random Workout Generator</p>
-    <p class="h4 index-head">Select Options:</p>
+    <p class="h2 index-head center">Random Workout Generator</p>
+    <p class="h4 index-head center">Select Options:</p>
 
     <form id="workout_form" action="/workout" method="post">
         <div class="form-group row index-row">
-            <label for="number" class="col-sm-3 col-form-label index-group-head" id="index-num-label">Number of Workouts</label>
+            <label for="number" class="col-sm-3 col-form-label index-group-head bold" id="index-num-label">Number of Workouts</label>
             <div class="col-sm-9" id="index-num">
                 <select class="form-control" id="number" name="number">
                     {% for i in range(12) %}
@@ -29,7 +30,7 @@
         </div>
 
         <div class="form-group row selection-group index-row">
-                <div class="col-sm-3 index-group-head">Equipment</div>
+                <div class="col-sm-3 index-group-head bold">Equipment</div>
                 <div class="col-sm-3 index-group-sel">
                     {% for equipment in EQUIPMENTS %}
                     <div class="form-check">
@@ -41,7 +42,7 @@
                     {% endfor %}
                 </div>
 
-                <div class="col-sm-3 index-group-head">Muscle Groups</div>
+                <div class="col-sm-3 index-group-head bold">Muscle Groups</div>
                 <div class="col-sm-3 index-group-sel">
                     {% for muscle in MUSCLES %}
                     <div class="form-check">
@@ -57,7 +58,7 @@
 
         <div class="form-group row selection-group index-row">
 
-                <div class="col-sm-3 index-group-head">Difficulty Level</div>
+                <div class="col-sm-3 index-group-head bold">Difficulty Level</div>
                 <div class="col-sm-3 index-group-sel">
                     {% for level in LEVELS %}
                     <div class="form-check">
@@ -69,7 +70,7 @@
                     {% endfor %}
                 </div>
 
-                <div class="col-sm-3 index-group-head">Workout Types</div>
+                <div class="col-sm-3 index-group-head bold">Workout Types</div>
                 <div class="col-sm-3 index-group-sel">
                     {% for type in TYPES %}
                     <div class="form-check">

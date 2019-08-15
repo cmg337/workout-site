@@ -61,7 +61,6 @@ $(document).ready(function(){
 
     var width1200 = window.matchMedia("(max-width: 1200px)")
     var width991 = window.matchMedia("(max-width: 991px)")
-    var width420 = window.matchMedia("(max-width: 420px)")
     changeColumn(width1200) // Call listener function at run time
     width1200.addListener(changeColumn) // Attach listener function on state changes
     fitImages(width991)

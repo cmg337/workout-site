@@ -50,3 +50,12 @@ $(document).ready(function () {
     width991.addListener(changeColumn) // Attach listener function on state changes
 
 })
+
+//loads html for exercise description when modal is opened
+function openExerciseModal(id) {
+    $.get("/exercise?id=" + id, function (data) {
+
+        $("#exercise-description" + id).html(data);
+
+    });
+}
