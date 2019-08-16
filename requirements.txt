@@ -1,0 +1,13 @@
+cs50
+flask
+flask_session
+random
+tempfile
+werkzeug
+datetime
+urllib
+bs4
+requests
+jinja2
+os
+flaskr
