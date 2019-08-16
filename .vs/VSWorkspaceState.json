@@ -4,8 +4,9 @@
     "\\flaskr",
     "\\flaskr\\static",
     "\\flaskr\\templates",
-    "\\instance"
+    "\\instance",
+    "\\tests"
   ],
-  "SelectedNode": "\\flaskr\\templates\\saved.html",
+  "SelectedNode": "\\flaskr\\static\\index-script.js",
   "PreviewInSolutionExplorer": false
 }

@@ -40,14 +40,30 @@ $(document).ready(function(){
         }
     }
 
+    //handle more than 2 images on smaller screen
     var fitImages = function(x) {
         if (x.matches) {
-
+            for (var i = 0; i < $(".workout-img-div").length - 1; i++) {
+                if ($(".workout-img-div")[i].children.length > 2) {
+                    //change outer class + set flex basis
+                    $($(".workout-img-div")[i]).addClass("big-img-div")
+                    $($(".workout-img-div")[i]).children().css("flex-basis", "50%")
+                }
+            }
+        }
+        else {
+            //change class back
+            $(".big-img-div").children().css("flex-basis", "auto")
+            $(".big-img-div").removeClass("big-img-div")
         }
     }
+
 
     var width1200 = window.matchMedia("(max-width: 1200px)")
     var width991 = window.matchMedia("(max-width: 991px)")
     changeColumn(width1200) // Call listener function at run time
     width1200.addListener(changeColumn) // Attach listener function on state changes
+    fitImages(width991)
+    width991.addListener(fitImages)
+
 })

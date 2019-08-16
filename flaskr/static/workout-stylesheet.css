@@ -15,17 +15,30 @@
     height: auto;
 }
 
-.img-container {
-    flex-basis: auto;
-}
 
-#workout-img-div {
+.workout-img-div {
     display: flex;
     align-content: flex-end;
     flex-basis: 60%;
 }
 
+.big-img-div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@media (max-width: 420px) {
+    .workout-img-div {
+        flex-direction: column;
+        flex-basis: 55%;
+    }
+}
+
+
 .exercise-info-div {
     flex-basis: 40%;
 }
+ 
 

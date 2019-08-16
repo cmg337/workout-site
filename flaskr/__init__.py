@@ -270,7 +270,7 @@ def create_app(test_config=None):
             else:
                 workoutID = int(request.form.get("id"))
                 # check for malicious attempt to overwrite other user's data
-                if user_id != db.execute("SELECT userID FROM saved WHERE workoutID = : workoutID", workoutID = workoutID)[0]['userID']:
+                if user_id != db.execute("SELECT userID FROM saved WHERE workoutID = :workoutID", workoutID = workoutID)[0]['userID']:
                     render_template("error.html")
                 # delete previous workout if exists
                 db.execute(

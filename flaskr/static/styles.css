@@ -1,50 +1,9 @@
-/*Index Page*/
-.index-group-head {
+.bold {
     font-weight: bold;
 }
-.index-head {
-    margin-bottom: 35px;
+.center{
     text-align: center;
 }
-.index-row{
-    margin: 35px 0;
-}
-.index-button{
-    margin-top: 40px;
-}
-@media(max-width:575px){
-    .index-group-head{
-        margin-top:30px;
-    }
-    .index-row {
-        margin: 0;
-    }
-}
-
-
-
-
-/* Stylize typeahead.js a la http://twitter.github.io/typeahead.js/css/examples.css */
-.tt-menu {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 1px;
-    max-height: 150px;
-    overflow-y: auto;
-    width: 300px;
-}
-
-.tt-suggestion.tt-cursor {
-    background-color: #0097cf;
-    color: #fff;
-    cursor: pointer;
-}
-
-.tt-suggestion {
-    margin: 0;
-    padding: 6px 12px;
-}
-.twitter-typeahead{
-    width: 100%;
+.index-head{
+    margin-bottom: 30px;
 }

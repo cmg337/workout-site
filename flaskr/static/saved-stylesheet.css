@@ -1,0 +1,30 @@
+.btn-outline-dark{
+    border: none;
+}
+.active .btn{
+    color: white;
+}
+.btn {
+    text-decoration: underline;
+}
+@media(max-width: 1200px) {
+    .mb-1 {
+        flex-basis: 49%;
+    }
+}
+.h2{
+    margin-bottom: 20px;
+}
+
+.hidden {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.overlay {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    z-index: 2;
+}

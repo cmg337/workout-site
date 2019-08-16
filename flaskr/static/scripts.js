@@ -101,7 +101,6 @@ $(document).ready(function () {
         });
         //check if name exists and is all alphabetical and if is visible
         $('.tt-input').each(function (i) {
-            console.log($(this).val())
             if (!/[a-z]+/i.test($(this).val()) && $(this).is(":visible") ) {
                 $(this).addClass("is-invalid");
                 $("#ex-feedback" + i).html("Input valid exercise name");
@@ -129,39 +128,6 @@ $(document).ready(function () {
 
 });
 
-
-//button functions
-
-
-
-// handle delete all button for workouts
-function deleteAllWorkouts() {
-    var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="deleteAll"/></form>';
-    $(form).appendTo('body').submit();
-}
-
-// handle deleting workouts from database
-function deleteWorkout(id) {
-    // create form to submit
-    var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="delete" /><input name="id" value="' + id + '"/></form>';
-    $(form).appendTo('body').submit();
-}
-
-// handle editing workouts from database
-function editWorkout(id) {
-    // create form to submit
-    var form = '<form action="/saved" method="post" hidden> <input name="edit_type" value="edit" /><input name="id" value="' + id + '"/></form>';
-    $(form).appendTo('body').submit();
-}
-
-//loads html for exercise description when modal is opened
-function openExerciseModal(id) {
-    $.get("/exercise?id=" + id, function (data) {
-
-        $("#exercise-description" + id).html(data);
-
-    });
-}
 //typeahead function to generate list of workouts asyn
 function searchExercises(query, syncResults, asyncResults) {
     let param = {
