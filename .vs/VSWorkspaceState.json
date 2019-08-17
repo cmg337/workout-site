@@ -4,9 +4,8 @@
     "\\flaskr",
     "\\flaskr\\static",
     "\\flaskr\\templates",
-    "\\instance",
     "\\tests"
   ],
-  "SelectedNode": "\\flaskr\\static\\index-script.js",
+  "SelectedNode": "\\Procfile",
   "PreviewInSolutionExplorer": false
 }
