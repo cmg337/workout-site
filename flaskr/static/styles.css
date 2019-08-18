@@ -7,3 +7,14 @@
 .index-head{
     margin-bottom: 30px;
 }
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
