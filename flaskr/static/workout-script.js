@@ -27,6 +27,15 @@ function saveWorkout(workout) {
     });
 }
 
+//loads html for exercise description when modal is opened
+function openExerciseModal(id) {
+    $.get("/exercise?id=" + id, function (data) {
+
+        $("#exercise-description" + id).html(data);
+
+    });
+}
+
 $(document).ready(function(){
     //add listener to dynamically change column width
      var changeColumn = function(x) {

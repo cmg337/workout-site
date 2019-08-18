@@ -51,11 +51,3 @@ $(document).ready(function () {
 
 })
 
-//loads html for exercise description when modal is opened
-function openExerciseModal(id) {
-    $.get("/exercise?id=" + id, function (data) {
-
-        $("#exercise-description" + id).html(data);
-
-    });
-}
