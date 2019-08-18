@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\flaskr",
     "\\flaskr\\static",
     "\\flaskr\\templates",
     "\\tests"
   ],
-  "SelectedNode": "\\Procfile",
+  "SelectedNode": "\\tests",
   "PreviewInSolutionExplorer": false
 }
