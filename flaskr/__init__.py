@@ -304,4 +304,7 @@ def create_app(test_config=None):
         searchResults = db.execute('SELECT * FROM BB_Workouts WHERE (name LIKE :q OR muscle LIKE :q OR equipment LIKE :q OR type LIKE :q)', q= "%" + q + '%' )
         return jsonify(searchResults)
 
+    if __name__ == "__main__":
+        app.run()
+
     return app
