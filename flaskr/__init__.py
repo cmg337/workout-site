@@ -58,7 +58,8 @@ def create_app(test_config=None):
 
     # Configure CS50 Library to use SQLite database
     db = SQL("sqlite:///flaskr/workout.db")
-
+    
+    
     # list of groups and types for exercises
     TYPES = list(map(lambda item: item['type'], db.execute(
         "SELECT DISTINCT type FROM BB_Workouts")))
@@ -68,6 +69,13 @@ def create_app(test_config=None):
         "SELECT DISTINCT equipment FROM BB_Workouts")))
     LEVELS = list(map(lambda item: item['level'], db.execute(
         "SELECT DISTINCT level FROM BB_Workouts")))
+
+    categories = {
+        "type": TYPES,
+        "muscle": MUSCLES,
+        "equipment": EQUIPMENTS,
+        "level": LEVELS
+        }
 
     # handles authentication requests in auth.py
     app.register_blueprint(auth.bp)
@@ -82,26 +90,22 @@ def create_app(test_config=None):
     def workout():
         """Generate Random Workout given user parameters"""
 
-        # set up SQL query
-        sqlQuery = "SELECT * FROM BB_Workouts WHERE ("
-        # filter by muscle group
-        for muscle in MUSCLES:
-            if request.form.get(muscle):
-                if sqlQuery != "SELECT * FROM BB_Workouts WHERE (":
-                    sqlQuery += "OR "
-                sqlQuery += 'muscle = "' + muscle + '"'
 
-        # add check variable to see if type queried yet
-        typeCheck = 0;
-        # filter by workout type
-        for type in TYPES:
-            if request.form.get(type):
-                # add AND to query for first type checked
-                if typeCheck == 0:
-                    typeCheck = 1
-                    sqlQuery += ') AND (type = "' + type + '"'
-                else:
-                    sqlQuery += ' OR type = "' + type + '"'
+
+
+        # filter by each selection category on index page
+        sqlQuery = "SELECT * FROM BB_Workouts WHERE (1" # set up query - uses 1 to allow first AND statement
+        for key, list in categories.items():
+            checker = 0 #add checker for each category to know when to add AND
+            for item in list:
+                if request.form.get(item):
+                    # add AND to query for first type checked
+                    if checker == 0:
+                        checker = 1
+                        sqlQuery += f') AND ({key} = "' + item + '"'
+                    else:
+                        sqlQuery += f' OR {key} = "' + item + '"'
+
         # add paranthesis for and statement
         sqlQuery += ")"
         # generate random workout from executed SQL query
