@@ -34,7 +34,7 @@ importlib-metadata==0.18
 isort==4.3.21
 itsdangerous==0.24
 Jinja2==2.10.1
-Mako==1.0.7
+Mako==1.2.2
 Markdown==2.6.8
 MarkupSafe==1.0
 more-itertools==7.1.0
